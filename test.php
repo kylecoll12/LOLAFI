@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta name="author" content="Kyle Collins">
+   <meta name="description" content="Grabs Selected Summoner Information">
+   <title>League of Legends Info</title>
+   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
+        <!--jQuery, linked from a CDN-->
+   <!--<script src="scripts.js"></script>-->
+	<script type="text/javascript">
+	    $(document).ready(function () {
+
+	        $('#txtSearch').focus(function () {
+	            var full = $("#SummonerInfo").has("img").length ? true : false;
+	            if (full == false) {
+	                $('#SummonerInfo').empty();
+	            }
+	        });
+
+	        var getPoster = function () {
+	            var name = $('#txtSearch').val().replace(/\s+/g,'');
+
+	            if (name == '') {
+
+	                $('#SummonerInfo').html("<h2>Please enter a summoner name.</h2>");
+
+	            } else {
+
+	                $('#SummonerInfo').html("<h2>Loading...</h2>");
+
+	                $.getJSON("http://prod.api.pvp.net/api/lol/na/v1.1/summoner/by-name/" + name + "?api_key=aa31ef83-5c5d-433a-ad05-1dea9c3736e5", function (json) {//?callback=?", function (json) {
+	                    if (json != null) {
+	                        $('#SummonerInfo').html('<h2 class="loading">SummonerID: ' + json.id + '</h2>' + '<br />' + 
+                            'Summoner Name:  <a href="http://www.lolking.net/summoner/na/' + json.id + '">' + json.name + '</a><br />' + 
+                            'Summoner Icon:  <img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon' + json.profileIconId + '.jpg" /><br />' + 
+                            'Summoner Level:  ' + json.summonerLevel + '<br />'
+                            );
+	                    } else {
+	                            $('#SummonerInfo').html('<h2>Could not locate summoner info.</h2>');
+	                        
+	                    }
+	                });
+
+	            }
+
+	            return false;
+	        }
+
+	        $('#bSearch').click(getPoster);
+	        $('#txtSearch').keyup(function (event) {
+	            if (event.keyCode == 13) {
+	                getPoster();
+	            }
+	        });
+
+	    });
+</script>
+   <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container">
+
+<?php
+    $summoners=array("CPHLegolas","YeahhhBuddy","FauxRizzle","Scribnibs","Pyow","LeetDotCom","memeyoumeyouyoume","Tumbletron","CPHLego","CPHPulsar");
+    $arrLength=count($summoners);
+    $results=array();
+    for($i=0;$i<$arrLength;$i++)
+    {
+        //look up summoner info
+        $results[i]= $summoners[i]; //SUMMONERINFO
+    }
+
+    //sort
+
+    ?>
+
+    <table>
+<?php foreach ($results as $row): ?>
+<tr>
+<td><?php echo $row[0]; ?></td>
+<!--<td><$?php echo $row['name']; ?></td>
+<td><$?php echo $row['league']; ?></td>
+<td><$?php echo $row['division']; ?></td>
+<td><$?php echo $row['points']; ?></td>-->
+</tr>
+<?php endforeach; ?>
+</table>
+
+   <header>
+      <h1>Find Summoner Info</h1>
+   </header>
+   <section id="fetch">
+      <input type="text" placeholder="Enter summoner ID" id="txtSearch" />
+      <button id="bSearch">Look Up</button>
+   </section>
+   <section id="SummonerInfo">
+   </section>
+   <footer>
+   </footer>
+</div>
+</body>
+</html>
