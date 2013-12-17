@@ -18,7 +18,7 @@
 	            }
 	        });
 
-	        var getPoster = function () {
+	        var getSummoner = function () {
 	            var name = $('#txtSearch').val().replace(/\s+/g,'');
 
 	            if (name == '') {
@@ -47,12 +47,44 @@
 	            return false;
 	        }
 
-	        $('#bSearch').click(getPoster);
+	        $('#bSearch').click(getSummoner);
 	        $('#txtSearch').keyup(function (event) {
 	            if (event.keyCode == 13) {
-	                getPoster();
+	                getSummoner();
 	            }
 	        });
+
+			 function getSummonerInfo(summonerName) 
+			 {
+				var returnString = '';
+	            var name = summonerName.replace(/\s+/g,'');
+
+	            if (name == '') 
+				{
+	                returnString = "<h2>Please enter a summoner name.</h2>";
+
+	            } 
+				else 
+				{
+
+	                returnString="<h2>Loading...</h2>";
+
+	                $.getJSON("http://prod.api.pvp.net/api/lol/na/v1.1/summoner/by-name/" + name + "?api_key=aa31ef83-5c5d-433a-ad05-1dea9c3736e5", function (json) {//?callback=?", function (json) {
+	                    if (json != null) {
+	                        returnString='<h2 class="loading">SummonerID: ' + json.id + '</h2>' + '<br />' + 
+                            'Summoner Name:  <a href="http://www.lolking.net/summoner/na/' + json.id + '">' + json.name + '</a><br />' + 
+                            'Summoner Icon:  <img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon' + json.profileIconId + '.jpg" /><br />' + 
+                            'Summoner Level:  ' + json.summonerLevel + '<br />';
+	                    } else {
+	                            returnString='<h2>Could not locate summoner info.</h2>';
+	                        
+	                    }
+	                });
+
+	            }
+
+	            return returnString;
+	        }
 
 	    });
 </script>
@@ -62,13 +94,15 @@
 <div class="container">
 
 <?php
-    $summoners=array("CPHLegolas","YeahhhBuddy","FauxRizzle","Scribnibs","Pyow","LeetDotCom","memeyoumeyouyoume","Tumbletron","CPHLego","CPHPulsar");
+	ini_set('display_errors', 'On');
+	error_reporting(E_ALL);
+    $summoners=array("CPHLegolas","YeahhhBuddy","FauxRizzle","Scribnibs","Pyow","LeetDotCom");//,"memeyoumeyouyoume","Tumbletron","CPHLego","CPHPulsar");
     $arrLength=count($summoners);
     $results=array();
     for($i=0;$i<$arrLength;$i++)
     {
         //look up summoner info
-        $results[i]= $summoners[i]; //SUMMONERINFO
+        $results[$i]= $summoners[$i]; //SUMMONERINFO
     }
 
     //sort
@@ -78,7 +112,7 @@
     <table>
 <?php foreach ($results as $row): ?>
 <tr>
-<td><?php echo $row[0]; ?></td>
+<td><script type='text/javascript'>getSummonerInfo('pyow');</script><?php echo $row; ?></td>
 <!--<td><$?php echo $row['name']; ?></td>
 <td><$?php echo $row['league']; ?></td>
 <td><$?php echo $row['division']; ?></td>
