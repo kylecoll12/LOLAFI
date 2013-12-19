@@ -8,86 +8,7 @@
    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.min.js"></script>
         <!--jQuery, linked from a CDN-->
    <!--<script src="scripts.js"></script>-->
-	<script type="text/javascript">
-	    $(document).ready(function () {
-
-	        $('#txtSearch').focus(function () {
-	            var full = $("#SummonerInfo").has("img").length ? true : false;
-	            if (full == false) {
-	                $('#SummonerInfo').empty();
-	            }
-	        });
-
-	        var getSummoner = function () {
-	            var name = $('#txtSearch').val().replace(/\s+/g,'');
-
-	            if (name == '') {
-
-	                $('#SummonerInfo').html("<h2>Please enter a summoner name.</h2>");
-
-	            } else {
-
-	                $('#SummonerInfo').html("<h2>Loading...</h2>");
-
-	                $.getJSON("http://prod.api.pvp.net/api/lol/na/v1.1/summoner/by-name/" + name + "?api_key=aa31ef83-5c5d-433a-ad05-1dea9c3736e5", function (json) {//?callback=?", function (json) {
-	                    if (json != null) {
-	                        $('#SummonerInfo').html('<h2 class="loading">SummonerID: ' + json.id + '</h2>' + '<br />' + 
-                            'Summoner Name:  <a href="http://www.lolking.net/summoner/na/' + json.id + '">' + json.name + '</a><br />' + 
-                            'Summoner Icon:  <img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon' + json.profileIconId + '.jpg" /><br />' + 
-                            'Summoner Level:  ' + json.summonerLevel + '<br />'
-                            );
-	                    } else {
-	                            $('#SummonerInfo').html('<h2>Could not locate summoner info.</h2>');
-	                        
-	                    }
-	                });
-
-	            }
-
-	            return false;
-	        }
-
-	        $('#bSearch').click(getSummoner);
-	        $('#txtSearch').keyup(function (event) {
-	            if (event.keyCode == 13) {
-	                getSummoner();
-	            }
-	        });
-
-			 function getSummonerInfo(summonerName) 
-			 {
-				var returnString = '';
-	            var name = summonerName.replace(/\s+/g,'');
-
-	            if (name == '') 
-				{
-	                returnString = "<h2>Please enter a summoner name.</h2>";
-
-	            } 
-				else 
-				{
-
-	                returnString="<h2>Loading...</h2>";
-
-	                $.getJSON("http://prod.api.pvp.net/api/lol/na/v1.1/summoner/by-name/" + name + "?api_key=aa31ef83-5c5d-433a-ad05-1dea9c3736e5", function (json) {//?callback=?", function (json) {
-	                    if (json != null) {
-	                        returnString='<h2 class="loading">SummonerID: ' + json.id + '</h2>' + '<br />' + 
-                            'Summoner Name:  <a href="http://www.lolking.net/summoner/na/' + json.id + '">' + json.name + '</a><br />' + 
-                            'Summoner Icon:  <img src="http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon' + json.profileIconId + '.jpg" /><br />' + 
-                            'Summoner Level:  ' + json.summonerLevel + '<br />';
-	                    } else {
-	                            returnString='<h2>Could not locate summoner info.</h2>';
-	                        
-	                    }
-	                });
-
-	            }
-
-	            return returnString;
-	        }
-
-	    });
-</script>
+	
    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -96,7 +17,7 @@
 <?php
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
-    $summoners=array("CPHLegolas","YeahhhBuddy","FauxRizzle","Scribnibs","Pyow","LeetDotCom");//,"memeyoumeyouyoume","Tumbletron","CPHLego","CPHPulsar");
+    $summoners=array("CPHLegolas","YeahhhBuddy","FauxRizzle","Scribnibs","Pyow","LeetDotCom","memeyoumeyouyoume","Tumbletron","CPHLego","CPHPulsar");
     $arrLength=count($summoners);
     $results=array();
     for($i=0;$i<$arrLength;$i++)
@@ -110,10 +31,13 @@
     ?>
 
     <table>
+	<tr><td>
+	
+	</tr></td>
 <?php foreach ($results as $row): ?>
 <tr>
-<td><script type='text/javascript'>getSummonerInfo('pyow');</script><?php echo $row; ?></td>
-<!--<td><$?php echo $row['name']; ?></td>
+<td></td>
+<td><$?php echo $row['name']; ?></td>
 <td><$?php echo $row['league']; ?></td>
 <td><$?php echo $row['division']; ?></td>
 <td><$?php echo $row['points']; ?></td>-->
