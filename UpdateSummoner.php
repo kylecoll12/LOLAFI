@@ -1,9 +1,11 @@
 <?php
+
+  $key=""  //api key goes here
     // This file updates summoner info from the RIOT server and adds it to the SummonerInfo.xml file.
     // Send the summoner name as the query string and it will update that summoner.
 
     $summoner=$_GET['summoner'];
-	$url = "http://prod.api.pvp.net/api/lol/na/v1.1/summoner/by-name/" . $summoner . "?api_key=aa31ef83-5c5d-433a-ad05-1dea9c3736e5";
+	$url = "http://prod.api.pvp.net/api/lol/na/v1.1/summoner/by-name/" . $summoner . "?api_key=" . $key;
 	$JSON = file_get_contents($url);
 
 	// echo the JSON (you can echo this to JavaScript to use it there)
