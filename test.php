@@ -17,30 +17,39 @@
 <?php
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
+	//consider getting this array straight from Summoners.xml
+	//currently these are the summoners that are pulled for this page from the xml although the xml might contain more than this.
     $summoners=array("CPHLegolas","YeahhhBuddy","FauxRizzle","Scribnibs","Pyow","LeetDotCom","memeyoumeyouyoume","Tumbletron","CPHLego","CPHPulsar");
     $arrLength=count($summoners);
     $results=array();
+
+	$xml=simplexml_load_file("SummonerInfo.xml");
+
     for($i=0;$i<$arrLength;$i++)
     {
         //look up summoner info
-        $results[$i]= $summoners[$i]; //SUMMONERINFO
+	    $node=$xml->xpath('//summoner[name[.="'.$summoners[$i].'"]]');
+        $results[$i]['name']= $node[0]->name;
+		$results[$i]['id']= $node[0]->id;
+		$results[$i]['summonerLevel']= $node[0]->summonerLevel;
+		$results[$i]['profileIconId']= $node[0]->profileIconId;
     }
 
     //sort
+?>
 
-    ?>
-
-    <table>
-	<tr><td>
+<table>
+<tr><td>
 	
-	</tr></td>
+</tr></td>
 <?php foreach ($results as $row): ?>
 <tr>
 <td></td>
 <td><$?php echo $row['name']; ?></td>
-<td><$?php echo $row['league']; ?></td>
-<td><$?php echo $row['division']; ?></td>
-<td><$?php echo $row['points']; ?></td>-->
+<td><$?php echo $row['id']; ?></td>
+<td><$?php echo $row['summonerLevel']; ?></td>
+<td><$?php echo $row['profileIconId']; ?></td>
+<td><input>Check for updates</input></td>
 </tr>
 <?php endforeach; ?>
 </table>
