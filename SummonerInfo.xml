@@ -1,12 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <summoners>
     <summoner>
-        <name>CPHLegolas</name>
+        <name>CPH Legolas</name>
         <level>30</level>
+        <id>24911226</id>
+        <profileIconId>589</profileIconId>
+        <summonerLevel>30</summonerLevel>
+        <games>
+            <game>
+                <createDate>0</createDate>
+            </game>
+        </games>
     </summoner>
     <summoner>YeahhhBuddy</summoner>
     <summoner>
         <name>Pyow</name>
+        <level>30</level>
+        <id>22538757</id>
+        <profileIconId>552</profileIconId>
+        <summonerLevel>30</summonerLevel>
+        <games>
+            <game>
+                <createDate>0</createDate>
+            </game>
+        </games>
     </summoner>
     <summoner>
         <name>Scribnibs</name>
