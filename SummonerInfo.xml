@@ -6,34 +6,52 @@
         <id>24911226</id>
         <profileIconId>589</profileIconId>
         <summonerLevel>30</summonerLevel>
-        <games>
-            <game>
-                <createDate>0</createDate>
-            </game>
-        </games>
+        <games></games>
     </summoner>
-    <summoner>YeahhhBuddy</summoner>
+    <summoner>
+      <name>YeahhhBuddy</name>
+      <games>
+      </games>
+    </summoner>
     <summoner>
         <name>Pyow</name>
         <level>30</level>
         <id>22538757</id>
         <profileIconId>552</profileIconId>
         <summonerLevel>30</summonerLevel>
-        <games>
-            <game>
-                <createDate>0</createDate>
-            </game>
-        </games>
+      <games>
+      </games>
     </summoner>
     <summoner>
-        <name>Scribnibs</name>
-        <level>30</level>
+      <name>Scribnibs</name>
+      <games></games>
     </summoner>
-    <summoner>LeetDotCom</summoner>
-    <summoner>FauxRizzle</summoner>
-    <summoner>memeyoumeyouyoume</summoner>
-    <summoner>Tumbletron</summoner>
-    <summoner>BeardMountain</summoner>
-    <summoner>CPHLego</summoner>
-    <summoner>CPHPulsar</summoner>
+    <summoner>
+      <name>LeetDotCom</name>
+      <games></games>
+    </summoner>
+    <summoner>
+      <name>FauxRizzle</name>
+      <games></games>
+    </summoner>
+    <summoner>
+      <name>memeyoumeyouyoume</name>
+      <games></games>
+    </summoner>
+    <summoner>
+    <name>Tumbletron</name>
+      <games></games>
+  </summoner>
+    <summoner>
+      <name>BeardMountain</name>
+      <games></games>
+    </summoner>
+    <summoner>
+    <name>CPH Lego</name>
+      <games></games>
+  </summoner>
+    <summoner>
+    <name>CPH Pulsar</name>
+      <games></games>
+  </summoner>
 </summoners>
