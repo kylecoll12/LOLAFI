@@ -27,23 +27,21 @@
   
   $urlLeague = "http://prod.api.pvp.net/api/lol/na/v2.2/league/by-summoner/" . $summonerId . "?api_key=" . $key;
 	$JSONLeague = file_get_contents($urlLeague);
-  $ulData=json_decode($JSONLeague,true);      
-  $lData = array_values($ulData);  //array_values makes this array indexable.  Otherwise you have to know the leagueid in advance
-  $leagueData=$lData[0];
-  //var_dump($leagueData["entries"]);//['25277476']);
+  $leagueData=json_decode($JSONLeague,true);
+  var_dump($leagueData[0]);
+  //must get queue:  RANKED_SOLO_5x5
   //get player's node not other people in the league
   //foreach($leagueData["entries"] as $leaguePlayer)
-  //$leagueEntries=$leagueData["entries"]
   for($i=0;$i<count($leagueData["entries"]);$i++)
   {
+    echo "Saving player ranked info";
     $leaguePlayer=$leagueData["entries"][$i];
     if($leaguePlayer["playerOrTeamId"]==$summonerId)
     {
-      var_dump($leaguePlayer);
       $playerNode=$leaguePlayer["entries"];
-      $node[0]->league=$leaguePlayer["tier"];
-      $node[0]->rank=$leaguePlayer["rank"];
-      $node[0]->leaguePoints=$leaguePlayer["leaguePoints"];
+      $node[0]->league=$leagueData["tier"];
+      $node[0]->rank=$leagueData["rank"];
+      $node[0]->leaguePoints=$leagueData["leaguePoints"];
     }
   }
   
@@ -56,13 +54,10 @@
   //var_dump($node[0]);
   //loop through gameData until you reach a game that has already been saved to xml
   $i=0;
-  while($i<10)  //we will get the 10 most recent from the api but they aren't necessarily in chronological order
+  while(($i<10) And ($gameData[$i]["createDate"] > $games->game[0]->createDate))
   {
-    echo "if ".$gameData[$i]["gameid"]." not equal ".$games->game[$i]->GameID."<br />";
+    //echo "looping".$games;
     //var_dump($games);
-    //if we don't already have this game
-    if(true)//$gameData[$i]["gameid"] != $games->game[$i]->GameID)
-    {
     //do I insert or append
     //this saves all data from the game
       $thisGame = $games->addChild('game');
@@ -94,7 +89,6 @@
         $thisStat->addAttribute('name',$stat["name"]);
         $thisStat->addAttribute('value',$stat["value"]);
       }
-    }
       $i=$i+1;
   }
 	$xml->asXML("SummonerInfo.xml");
