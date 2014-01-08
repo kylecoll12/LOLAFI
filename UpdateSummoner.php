@@ -55,13 +55,27 @@
   $games = $node[0]->games;
   //var_dump($node[0]);
   //loop through gameData until you reach a game that has already been saved to xml
-  $i=0;
-  while($i<10)  //we will get the 10 most recent from the api but they aren't necessarily in chronological order
+  //currently each new game is being compared to every game in the games list which is accurate but slow.
+  //Ideally both lists would be sorted chronologically so that only 10 checks would need to be made (instead of 10xthe number of games total)
+  
+  echo "<br />GameData Count: ".count($gameData)." Games Count: ".count($games->game)."<br />";
+  for($i=0;$i<count($gameData);$i++)  //we will get the 10 most recent from the api but they aren't necessarily in chronological order
   {
-    echo "if ".$gameData[$i]["gameid"]." not equal ".$games->game[$i]->GameID."<br />";
-    //var_dump($games);
+  
+    //first check to see if we already have this game
+    $isNew=true;
+    for($j=0;$j<count($games->game);$j++)
+    {
+      if($gameData[$i]["gameId"] == $games->game[$j]->gameId)
+        {
+          //echo "Game ".$i." matched.<br />";
+          $isNew=false;
+          $j=count($games->game);
+        }
+    }
+    
     //if we don't already have this game
-    if(true)//$gameData[$i]["gameid"] != $games->game[$i]->GameID)
+    if($isNew)
     {
     //do I insert or append
     //this saves all data from the game
@@ -77,7 +91,7 @@
       $thisGame->addChild('spell2',$gameData[$i]["spell2"]);
       $thisGame->addChild('level',$gameData[$i]["level"]);
       $thisGame->addChild('createDate',$gameData[$i]["createDate"]);
-      //var_dump($gameData[$i]);
+      
       $thisGamePlayers = $thisGame->addChild('fellowPlayers');
       foreach($gameData[$i]["fellowPlayers"] as $player)
       {
@@ -95,7 +109,6 @@
         $thisStat->addAttribute('value',$stat["value"]);
       }
     }
-      $i=$i+1;
   }
 	$xml->asXML("SummonerInfo.xml");
   
