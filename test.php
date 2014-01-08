@@ -13,7 +13,39 @@
 </head>
 <body>
 <div class="container">
-
+<style>
+	body {
+		font-family: Courier;	
+	}
+	
+	.ranktable {
+		border-collapse: collapse;
+		border: solid 1px #000099;
+		background-color: #7ADAC6;
+		color: #000099;
+	}
+	
+	.ranktableheader {
+		font-weight: bold;
+	}
+	
+	.ranktable td {
+		padding: 4px;	
+	}
+	
+	.iconcell
+	{
+	background-size: 42px;
+background-position: center;
+width: 32px;
+height: 32px;
+display: inline-block;
+vertical-align: middle;
+border-radius: 3px;
+box-shadow: 0 0 2px #000;
+-webkit-box-shadow: 0 0 2px #000;
+	}
+</style>
 <?php
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
@@ -45,30 +77,77 @@
 			$results[$i]['leaguePoints']=$node[0]->leaguePoints;
 		}
     
-	var_dump(count($results));
+	//var_dump(count($results));
     //sort
+    function getLeagueValue($a)
+    {
+    	if($a=="BRONZE")
+    		return 5;
+    	else if($a=="SILVER")
+    		return 4;
+    	else if($a=="GOLD")
+    		return 3;
+    	else if($a=="PLATINUM")
+    		return 2;
+    	else if($a=="DIAMOND")
+    		return 1;
+    	else if($a=="CHALLENGER")
+    		return 0;
+    	else
+    		return 6;
+    }
+    function getRank($a)
+    {
+    	if($a=="V")
+    		return 5;
+    	else if($a=="IV")
+    		return 4;
+    	else if($a=="III")
+    		return 3;
+    	else if($a=="II")
+    		return 2;
+    	else if($a=="I")
+    		return 1;
+    	else
+    		return 6;
+    }
+    function cmp($a,$b)  //compares summoner a and b to find the higher ranked.  if a<b returns <0 if a>b returns >0 0 if they are equal
+    {
+    	if(getLeagueValue($a["league"])==getLeagueValue($b["league"])) {
+    			if(getRank($a["rank"])==getRank($b["rank"])) {
+    					return ($a["leaguePoints"] < $b["leaguePoints"]) ? -1 : 1;
+    			}
+    			else
+    				return (getRank($a["rank"]) < getRank($b["rank"])) ? -1 : 1;
+    	}
+    	else
+    		return (getLeagueValue($a["league"]) < getLeagueValue($b["league"])) ? -1 : 1;
+    	//return strcmp($a["league"],$b["league"]);
+    }
+    
+    usort($results,"cmp");
+    
 ?>
-
-<table>
-<tr><td>
-	
-</tr></td>
+<center>
+<table class='ranktable' border='1'>
+<tr class='ranktableheader'>
+	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td colspan='2'>League</td><td>Points</td><!--<td></td>-->
+</tr>
 <?php foreach ($results as $row): ?>
 <tr>
-<td></td>
-<td>Name: <?php echo $row['name']; ?></td>
-<td>Id: <?php echo $row['id']; ?></td>
-<td>Level:  <?php echo $row['summonerLevel']; ?></td>
-<td>Icon:  <?php echo $row['profileIconId']; ?></td>
-<td>League:  <?php echo $row['league']; ?></td>
-<td>Rank:  <?php echo $row['rank']; ?></td>
-<td>Points:  <?php echo $row['leaguePoints']; ?></td>
-<td><button id="bUpdate">Check for updates</button></td>
+<td><div class='iconcell' style="background-image:url(http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon<?php echo $row['profileIconId']; ?>.jpg);"> </td>
+<td><?php echo $row['name']; ?></td>
+<!--<td>Id: <?php echo $row['id']; ?></td>-->
+<td><?php echo $row['summonerLevel']; ?></td>
+<td><?php echo $row['league']; ?></td>
+<td><?php echo $row['rank']; ?></td>
+<td><?php echo $row['leaguePoints']; ?></td>
+<!--<td><button id="bUpdate">Check for updates</button></td>-->
 </tr>
 <?php endforeach; ?>
 </table>
 
-   
+   </center>
 </div>
 </body>
 </html>

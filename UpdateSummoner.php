@@ -29,8 +29,10 @@
 	$JSONLeague = file_get_contents($urlLeague);
   $ulData=json_decode($JSONLeague,true);      
   $lData = array_values($ulData);  //array_values makes this array indexable.  Otherwise you have to know the leagueid in advance
-  $leagueData=$lData[0];
-  //var_dump($leagueData["entries"]);//['25277476']);
+  for($k=0;$k<count($lData);$k++)
+  {
+  $leagueData=$lData[$k];  //For some reason lData contains 4? divisions.  Most times the summoner is in [0] but sometimes it is in the other ones.  I don't understand why.
+  //var_dump(count($lData));//['25277476']);
   //get player's node not other people in the league
   //foreach($leagueData["entries"] as $leaguePlayer)
   //$leagueEntries=$leagueData["entries"]
@@ -46,7 +48,7 @@
       $node[0]->leaguePoints=$leaguePlayer["leaguePoints"];
     }
   }
-  
+  }
   //under the summoner get their games and check to see if any games are new.
   $urlGames = "http://prod.api.pvp.net//api/lol/na/v1.2/game/by-summoner/" . $summonerId . "/recent?api_key=" . $key;
 	$JSONGames = file_get_contents($urlGames);
