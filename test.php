@@ -79,6 +79,7 @@ box-shadow: 0 0 2px #000;
 			$results[$i]['record']=$gStats[0];
 			$results[$i]['kda']=$gStats[1];
 			$results[$i]['gpm']=$gStats[2];
+			$results[$i]['ss']=$gStats[3];
 		}
     
 	function getGameStats($games)
@@ -91,6 +92,8 @@ box-shadow: 0 0 2px #000;
 		$gamesTot=0;
 		$time=0;
 		$gold=0;
+		$cs=0;
+		$fiveGames=0;
 		foreach($games->game as $thisGame)
 		{
 			$gamesTot++;
@@ -117,6 +120,7 @@ box-shadow: 0 0 2px #000;
 				//var_dump($attribute);
 				if($gameType=="RANKED_SOLO_5x5" || $gameType=="NORMAL")
 				{
+				$fiveGames++;
 				$attribute = $thisGame->xpath('statistics/stat[@name="TIME_PLAYED"]');
 				if(count($attribute)>0)
 					$time = $time + $attribute[0]["value"];
@@ -124,6 +128,10 @@ box-shadow: 0 0 2px #000;
 				$attribute = $thisGame->xpath('statistics/stat[@name="GOLD_EARNED"]');
 				if(count($attribute)>0)
 					$gold = $gold + $attribute[0]["value"];
+				
+				$attribute = $thisGame->xpath('statistics/stat[@name="MINIONS_KILLED"]');
+				if(count($attribute)>0)
+					$cs = $cs + $attribute[0]["value"];
 				}
 				
 		}
@@ -133,7 +141,8 @@ box-shadow: 0 0 2px #000;
 		$gpm=number_format($gold/($time/60));
 		$record = $wins."-".$losses;
 		$kda = $killsPerGame."/".$deathsPerGame."/".$assistsPerGame;
-		$gameStats = array($record,$kda,$gpm);
+		$seeleyscore = number_format(((($kills + $assists - $deaths)*($cs*13/$time)+$gpm)/3.14)/$fiveGames,2);
+		$gameStats = array($record,$kda,$gpm,$seeleyscore);
 		return $gameStats;
 	}
 	//var_dump(count($results));
@@ -190,7 +199,7 @@ box-shadow: 0 0 2px #000;
 <center>
 <table class='ranktable' border='1'>
 <tr class='ranktableheader'>
-	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td colspan='2'>League</td><td>Points</td><td>Record</td><td>K/D/A</td><td>GPM</td><!--<td></td>-->
+	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td colspan='2'>League</td><td>Points</td><td>Record</td><td>K/D/A</td><td>GPM</td><td>S Score</td><!--<td></td>-->
 </tr>
 <?php foreach ($results as $row): ?>
 <tr>
@@ -204,6 +213,7 @@ box-shadow: 0 0 2px #000;
 <td><?php echo $row['record']; ?></td>
 <td><?php echo $row['kda']; ?></td>
 <td><?php echo $row['gpm']; ?></td>
+<!--<td><?php echo $row['ss']; ?></td>-->
 <!--<td><button id="bUpdate">Check for updates</button></td>-->
 </tr>
 <?php endforeach; ?>

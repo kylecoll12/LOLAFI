@@ -27,9 +27,7 @@
   
   $urlLeague = "http://prod.api.pvp.net/api/lol/na/v2.2/league/by-summoner/" . $summonerId . "?api_key=" . $key;
 	$JSONLeague = file_get_contents($urlLeague);
-  $ulData=json_decode($JSONLeague,true);
-  if($ulData!=null)
-  {
+  $ulData=json_decode($JSONLeague,true);      
   $lData = array_values($ulData);  //array_values makes this array indexable.  Otherwise you have to know the leagueid in advance
   for($k=0;$k<count($lData);$k++)
   {
@@ -49,7 +47,6 @@
       $node[0]->rank=$leaguePlayer["rank"];
       $node[0]->leaguePoints=$leaguePlayer["leaguePoints"];
     }
-  }
   }
   }
   //under the summoner get their games and check to see if any games are new.
