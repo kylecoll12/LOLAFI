@@ -199,7 +199,7 @@ box-shadow: 0 0 2px #000;
 <center>
 <table class='ranktable' border='1'>
 <tr class='ranktableheader'>
-	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td colspan='2'>League</td><td>Points</td><td>Record</td><td>K/D/A</td><td>GPM</td><td>S Score</td><!--<td></td>-->
+	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td colspan='2'>League</td><td>Points</td><td>Record</td><td>K/D/A</td><td>GPM</td><!--<td>S Score</td><td></td>-->
 </tr>
 <?php foreach ($results as $row): ?>
 <tr>
