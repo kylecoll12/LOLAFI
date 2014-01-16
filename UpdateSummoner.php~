@@ -24,11 +24,6 @@
 	$node[0]->name = $data["name"];
 	$node[0]->profileIconId = $data["profileIconId"];
 	$node[0]->summonerLevel = $data["summonerLevel"];
-	//now timestamp this entry
-	date_default_timezone_set('America/Chicago');
-	$timestamp = date('Y-m-d H:i:s');
-	$node[0]->lastUpdate = $timestamp;
-	
   
   $urlLeague = "http://prod.api.pvp.net/api/lol/na/v2.2/league/by-summoner/" . $summonerId . "?api_key=" . $key;
 	$JSONLeague = file_get_contents($urlLeague);
@@ -48,8 +43,7 @@
     $leaguePlayer=$leagueData["entries"][$i];
     if($leaguePlayer["playerOrTeamId"]==$summonerId)
     {
-      //var_dump($leaguePlayer);
-      echo "Ranked data found.";
+      var_dump($leaguePlayer);
       $playerNode=$leaguePlayer["entries"];
       $node[0]->league=$leaguePlayer["tier"];
       $node[0]->rank=$leaguePlayer["rank"];
@@ -59,21 +53,20 @@
   }
   }
   //under the summoner get their games and check to see if any games are new.
-  $urlGames = "http://prod.api.pvp.net//api/lol/na/v1.3/game/by-summoner/" . $summonerId . "/recent?api_key=" . $key;
+  $urlGames = "http://prod.api.pvp.net//api/lol/na/v1.2/game/by-summoner/" . $summonerId . "/recent?api_key=" . $key;
 	$JSONGames = file_get_contents($urlGames);
   $gamesData = json_decode($JSONGames, true);
   $gameData=$gamesData["games"];
   $games = $node[0]->games;
-  //var_dump($gameData);
+  //var_dump($node[0]);
   //loop through gameData until you reach a game that has already been saved to xml
   //currently each new game is being compared to every game in the games list which is accurate but slow.
   //Ideally both lists would be sorted chronologically so that only 10 checks would need to be made (instead of 10xthe number of games total)
   
   echo "<br />GameData Count: ".count($gameData)." Games Count: ".count($games->game)."<br />";
-  for($i=0;$i<count($gameData);$i++)  //we will get the 10 most recent from the api but they aren't necessarily in chronological order (i want them to be eventually along with the saved games)
+  for($i=0;$i<count($gameData);$i++)  //we will get the 10 most recent from the api but they aren't necessarily in chronological order
   {
-    if(count($gameData[$i]["stats"])>0)
-    {
+  
     //first check to see if we already have this game
     $isNew=true;
     for($j=0;$j<count($games->game);$j++)
@@ -112,19 +105,14 @@
         $thisPlayer->addAttribute('teamId',$player["teamId"]);
         $thisPlayer->addAttribute('championId',$player["championId"]);
       }
-      $thisGameStats = $thisGame->addChild('stats');
-      $thisGameDataStats = $gameData[$i]["stats"];
-      foreach($thisGameDataStats as $statKey => $stat)
+      $thisGameStats = $thisGame->addChild('statistics');
+      foreach($gameData[$i]["statistics"] as $stat)
       {
-      	//echo $statKey." - ".$stat."<br>";
-      	$thisStat = $thisGameStats->addChild($statKey,$stat);
-        //$thisStat = $thisGameStats->addAttribute($statKey,$stat);
+        $thisStat = $thisGameStats->addChild('stat');
+        $thisStat->addAttribute('id',$stat["id"]);
+        $thisStat->addAttribute('name',$stat["name"]);
+        $thisStat->addAttribute('value',$stat["value"]);
       }
-    }
-    }
-    else
-    {
-    	echo "no statistics found...<br />";	    
     }
   }
 	$xml->asXML("SummonerInfo.xml");
