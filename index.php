@@ -96,53 +96,64 @@ box-shadow: 0 0 2px #000;
 		$fiveGames=0;
 		foreach($games->game as $thisGame)
 		{
-			$gamesTot++;
-				//each game contains the attribute WIN (23) if the game was won and LOSS (25) if the game was lost.  We are just counting the wins here.
-				$result = $thisGame->xpath('statistics/stat[@name="WIN"]');
-				if(count($result)>0)                    
-					$wins++;
-				else
-					$losses++;
-					
-				$attribute = $thisGame->xpath('statistics/stat[@name="CHAMPIONS_KILLED"]');
-				if(count($attribute)>0)
-					$kills = $kills + $attribute[0]["value"];
-				
-				$attribute = $thisGame->xpath('statistics/stat[@name="NUM_DEATHS"]');
-				if(count($attribute)>0)
-					$deaths = $deaths + $attribute[0]["value"];
-				
-				$attribute = $thisGame->xpath('statistics/stat[@name="ASSISTS"]');
-				if(count($attribute)>0)
-					$assists = $assists + $attribute[0]["value"];
-				
+				$gamesTot++;
 				$gameType = $thisGame->subType;
-				//var_dump($attribute);
 				if($gameType=="RANKED_SOLO_5x5" || $gameType=="NORMAL")
 				{
-				$fiveGames++;
-				$attribute = $thisGame->xpath('statistics/stat[@name="TIME_PLAYED"]');
-				if(count($attribute)>0)
-					$time = $time + $attribute[0]["value"];
+					//each game contains the attribute WIN (23) if the game was won and LOSS (25) if the game was lost.  We are just counting the wins here.
+					//^^ not true anymore.  This was changed in version 3
+					//$result = $thisGame->stats->win;
+					
+					if($thisGame->stats->win>0)                    
+						$wins++;
+					else	
+						$losses++;
+					
+					$attribute = $thisGame->xpath('statistics/stat[@name="CHAMPIONS_KILLED"]');
+					if($thisGame->stats->championsKilled>0)
+						$kills = $kills + $thisGame->stats->championsKilled;
 				
-				$attribute = $thisGame->xpath('statistics/stat[@name="GOLD_EARNED"]');
-				if(count($attribute)>0)
-					$gold = $gold + $attribute[0]["value"];
+					//$attribute = $thisGame->xpath('statistics/stat[@name="NUM_DEATHS"]');
+					//if(count($attribute)>0)
+						$deaths = $deaths + $thisGame->stats->numDeaths;
 				
-				$attribute = $thisGame->xpath('statistics/stat[@name="MINIONS_KILLED"]');
-				if(count($attribute)>0)
-					$cs = $cs + $attribute[0]["value"];
+					//$attribute = $thisGame->xpath('statistics/stat[@name="ASSISTS"]');
+					//if(count($attribute)>0)
+						$assists = $assists + $thisGame->stats->assists;
+				
+					//var_dump($attribute);
+				
+					$fiveGames++;
+					//$attribute = $thisGame->xpath('statistics/stat[@name="TIME_PLAYED"]');
+					//if(count($attribute)>0)
+						$time = $time + $thisGame->stats->timePlayed;
+					
+					//$attribute = $thisGame->xpath('statistics/stat[@name="GOLD_EARNED"]');
+					//if(count($attribute)>0)
+						$gold = $gold + $thisGame->stats->goldEarned;
+				
+					//$attribute = $thisGame->xpath('statistics/stat[@name="MINIONS_KILLED"]');
+					//if(count($attribute)>0)
+						$cs = $cs + $thisGame->stats->minionsKilled;
 				}
 				
 		}
-		$killsPerGame=number_format($kills/$gamesTot,2);
-		$deathsPerGame=number_format($deaths/$gamesTot,2);
-		$assistsPerGame=number_format($assists/$gamesTot,2);
-		$gpm=number_format($gold/($time/60));
-		$record = $wins."-".$losses;
-		$kda = $killsPerGame."/".$deathsPerGame."/".$assistsPerGame;
-		$seeleyscore = number_format(((($kills + $assists - $deaths)*($cs*13/$time)+$gpm)/3.14)/$fiveGames,2);
-		$gameStats = array($record,$kda,$gpm,$seeleyscore);
+		if($gamesTot>0)
+		{
+			$killsPerGame=number_format($kills/$gamesTot,2);
+			$deathsPerGame=number_format($deaths/$gamesTot,2);
+			$assistsPerGame=number_format($assists/$gamesTot,2);
+			if($time>0)
+				$gpm=number_format($gold/($time/60));
+			else
+				$gpm=0;
+			$record = $wins."-".$losses;
+			$kda = $killsPerGame."/".$deathsPerGame."/".$assistsPerGame;
+			$seeleyscore = 0;//number_format(((($kills + $assists - $deaths)*($cs*13/$time)+$gpm)/3.14)/$fiveGames,2);
+			$gameStats = array($record,$kda,$gpm,$seeleyscore);
+		}
+		else
+		{ $gameStats = array(0,0,0,0); }
 		return $gameStats;
 	}
 	//var_dump(count($results));
@@ -204,7 +215,7 @@ box-shadow: 0 0 2px #000;
 <?php foreach ($results as $row): ?>
 <tr>
 <td><div class='iconcell' style="background-image:url(http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon<?php echo $row['profileIconId']; ?>.jpg);"> </td>
-<td><?php echo $row['name']; ?></td>
+<td><?php echo '<a href="SummonerStats.php?summoner='.$row['name'].'">'.$row['name'].'</a>'; ?></td>
 <!--<td>Id: <?php echo $row['id']; ?></td>-->
 <td><?php echo $row['summonerLevel']; ?></td>
 <td><?php echo $row['league']; ?></td>
