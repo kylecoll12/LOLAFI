@@ -78,7 +78,7 @@
     $isNew=true;
     for($j=0;$j<count($games->game);$j++)
     {
-      if($gameData[$i]["gameId"] == $games->game[$j]->gameId)
+      if(($gameData[$i]["gameId"] == $games->game[$j]->gameId) || ($gameData[$i]["createDate"]<1389895200000))
         {
           //echo "Game ".$i." matched.<br />";
           $isNew=false;

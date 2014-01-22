@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items>
+<item id='1001' name='Boots of Speed' />
+<item id='1004' name='Faerie Charm' />
+<item id='1011' name='Giants Belt' />
+<item id='1018' name='Cloak of Agility' />
+<item id='1027' name='Sapphire Crystal' />
+<item id='1028' name='Ruby Crystal' />
+<item id='1031' name='Chain Vest' />
+<item id='1033' name='Null-Magic Mantle' />
+<item id='1037' name='Pickaxe' />
+<item id='1038' name='B. F. Sword' />
+<item id='1042' name='Dagger' />
+<item id='1043' name='Recurve Bow' />
+<item id='1052' name='Amplifying Tome' />
+<item id='1053' name='Vampiric Scepter' />
+<item id='1055' name='Dorans Blade' />
+<item id='1056' name='Dorans Ring' />
+<item id='1058' name='Needlessly Large Rod' />
+<item id='1062' name='Prosepctors Blade' />
+<item id='1074' name='Dorans Shield' />
+<item id='1075' name='Dorans Blade (Showdown)' />
+<item id='1080' name='Spirit Stone' />
+<item id='2003' name='Health Potion' />
+<item id='2009' name='Total Biscuit of Rejuvenation' />
+<item id='2010' name='Total Biscuit of Rejuvenation' />
+<item id='2039' name='Elixir of Brilliance' />
+<item id='2040' name='Ichor of Rage' />
+<item id='2043' name='Vision Ward' />
+<item id='2044' name='Stealth Ward' />
+<item id='2047' name='Oracles Extract' />
+<item id='2048' name='Ichor of Illumination' />
+<item id='2050' name='Explorers Ward' />
+<item id='2051' name='Guardians Horn' />
+<item id='3001' name='Abyssal Scepter' />
+<item id='3003' name='Archangels Staff' />
+<item id='3005' name='Atmas Impaler' />
+<item id='3006' name='Berserkers Greaves' />
+<item id='3008' name='Manamune (Crystal Scar)' />
+<item id='3009' name='Boots of Swiftness' />
+<item id='3020' name='Sorcerers Shoes' />
+<item id='3022' name='Frozen Mallet' />
+<item id='3024' name='Glacial Shroud' />
+<item id='3025' name='Iceborn Gauntlet' />
+<item id='3027' name='Rod of Ages' />
+<item id='3028' name='Chalice of Harmony' />
+<item id='3031' name='Infinity Edge' />
+<item id='3035' name='Last Whisper' />
+<item id='3041' name='Mejais Soulstealer' />
+<item id='3042' name='Muramana' />
+<item id='3044' name='Phage' />
+<item id='3046' name='Phantom Dancer' />
+<item id='3048' name='Seraphs Embrace' />
+<item id='3050' name='Zekes Herald' />
+<item id='3057' name='Sheen' />
+<item id='3060' name='Banner of Command' />
+<item id='3067' name='Kindlegem' />
+<item id='3068' name='Sunfire Cape' />
+<item id='3070' name='Tear of the Goddess' />
+<item id='3071' name='The Black Cleaver' />
+<item id='3073' name='Tear of the Goddess (Crystal Scar)' />
+<item id='3074' name='Ravenous Hydra' />
+<item id='3077' name='Tiamat (Melee Only)' />
+<item id='3078' name='Trinity Force' />
+<item id='3083' name='Warmogs Armor' />
+<item id='3084' name='Overlords Bloodmail' />
+<item id='3086' name='Zeal' />
+<item id='3087' name='Static Shiv' />
+<item id='3090' name='Wooglets Witchcap' />
+<item id='3091' name='Wits End' />
+<item id='3093' name='Avarice Blade' />
+<item id='3096' name='Nomads Medallion' />
+<item id='3098' name='Frostfang' />
+<item id='3100' name='Lich Bane' />
+<item id='3102' name='Banshees Veil' />
+<item id='3104' name='Lord Van Damms Pillager' />
+<item id='3106' name='Madreds Razors' />
+<item id='3108' name='Fiendish Codex' />
+<item id='3111' name='Mercurys Treads' />
+<item id='3112' name='Orb of Winter' />
+<item id='3116' name='Rylais Crystal Scepter' />
+<item id='3117' name='Boots of Mobility' />
+<item id='3123' name='Executioners Calling' />
+<item id='3124' name='Guinsoos Rageblade' />
+<item id='3131' name='Sword of the Divine' />
+<item id='3134' name='The Brutalizer' />
+<item id='3136' name='Haunting Guise' />
+<item id='3139' name='Mercurial Scimitar' />
+<item id='3141' name='Sword of the Occult' />
+<item id='3142' name='Youmuus Ghostblade' />
+<item id='3144' name='Bilgewater Cutlass' />
+<item id='3145' name='Hextech Revolver' />
+<item id='3151' name='Liandrys Torment' />
+<item id='3152' name='Will of the Ancients' />
+<item id='3154' name='Wriggles Lantern' />
+<item id='3155' name='Hexdrinker' />
+<item id='3157' name='Zhonyas Hourglass' />
+<item id='3158' name='Ionian Boots of Lucidity' />
+<item id='3165' name='Morellonomicon' />
+<item id='3166' name='Bonetooth Necklace' />
+<item id='3168' name='Bonetooth Necklace' />
+<item id='3169' name='Bonetooth Necklace' />
+<item id='3171' name='Bonetooth Necklace' />
+<item id='3172' name='Zephyr' />
+<item id='3175' name='Head of KhaZix' />
+<item id='3180' name='Odyns Veil' />
+<item id='3184' name='Entropy' />
+<item id='3185' name='The Lightbringer' />
+<item id='3188' name='Blackfire Torch' />
+<item id='3190' name='Locket of the Iron Solari' />
+<item id='3196' name='Augment: Power' />
+<item id='3197' name='Augment: Gravity' />
+<item id='3200' name='The Hex Core' />
+<item id='3206' name='Spirit of the Spectral Wraith' />
+<item id='3209' name='Spirit of the Elder Lizard' />
+<item id='3211' name='Spectres Cowl' />
+<item id='3250' name='Berserkers Greaves Enchantment: Homeguard' />
+<item id='3251' name='Berserkers Greaves Enchantment: Captain' />
+<item id='3253' name='Sorcerers Shoes Enchantment Distortion' />
+<item id='3254' name='Berserkers Greaves Enchantment: Alacrity' />
+<item id='3256' name='Sorcerers Shoes Enchantment: Captain' />
+<item id='3257' name='Sorcerers Shoes Enchantment: Furor' />
+<item id='3263' name='Sorcerers Shoes Enchantment: Alacrity' />
+<item id='3265' name='Ninja Tabi Enchantment: Homeguard' />
+<item id='3266' name='Ninja Tabi Enchantment: Furor' />
+<item id='3268' name='Ninja Tabi Enchantment: Distortion' />
+<item id='3265' name='Merc Treads Enchantment: Homeguard' />
+<item id='3266' name='Merc Treads Enchantment: Captain' />
+<item id='3268' name='Merc Treads Enchantment: Distortion' />
+<item id='3269' name='Merc Treads Enchantment: Alacrity' />
+<item id='3271' name='Boots of Mobility Enchantment: Captain' />
+<item id='3272' name='Boots of Mobility Enchantment: Furor' />
+<item id='3274' name='Boots of Mobility Enchantment: Alacrity' />
+<item id='3275' name='Ionian Boots of Lucidity Enchantment: Homeguard' />
+<item id='3277' name='Ionian Boots of Lucidity Enchantment: Furor' />
+<item id='3278' name='Ionian Boots of Lucidity Enchantment: Distortion' />
+<item id='3280' name='Boots of Swiftness Enchantment: Homeguard' />
+<item id='3281' name='Boots of Swiftness Enchantment: Captain' />
+<item id='3283' name='Boots of Swiftness Enchantment: Distortion' />
+<item id='3284' name='Boots of Swiftness Enchantment: Alacrity' />
+<item id='3301' name='Ancient Coin' />
+<item id='3302' name='Relic Shield' />
+<item id='3341' name='Sweeping Lens (Trinket)' />
+<item id='3340' name='Warding Totem (Trinket)' />
+<item id='3350' name='Greater Totem (Trinket)' />
+<item id='3351' name='Greater Lens (Trinket)' />
+<item id='3361' name='Greater Stealth Totem (Trinket)' />
+<item id='3362' name='Greater Vision Totem (Trinket)' />
+<item id='3364' name='Oracles Lens (Trinket)' />
+<item id='3401' name='Face of the Mountain' />
+<item id='3363' name='Farsight Orb (Trinket)' />
+<item id='3352' name='Greater Orb (Trinket)' />
+<item id='3342' name='Scrying Orb (Trinket)' />
+<item id='3303' name='Spellthiefs Edge' />
+<item id='3290' name='Twin Shadows' />
+<item id='3282' name='Boots of Swiftness Enchantment: Furor' />
+<item id='3279' name='Ionian Boots of Lucidity Enchantment: Alacrity' />
+<item id='3276' name='Ionian Boots of Lucidity Enchantment: Captain' />
+<item id='3273' name='Boots of Mobility Enchantment: Distortion' />
+<item id='3270' name='Boots of Mobility Enchantment: Homeguard' />
+<item id='3267' name='Merc Treads Enchantment: Furor' />
+<item id='3264' name='Ninja Tabi Enchantment: Alacrity' />
+<item id='3261' name='Ninja Tabi Enchantment: Captain' />
+<item id='3258' name='Sorcerers Shoes Enchantment: Distortion' />
+<item id='3255' name='Sorcerers Shoes Enchantment: Homeguard' />
+<item id='3252' name='Berserkers Greaves Enchantment: Furor' />
+<item id='3222' name='Mikaels Crucible' />
+<item id='3207' name='Spirit of the Ancient Golem' />
+<item id='3198' name='Augment: Death' />
+<item id='3191' name='Seekers Armguard' />
+<item id='3187' name='Hextech Sweeper' />
+<item id='3183' name='Sanguine Blade' />
+<item id='3174' name='Athenes Unholy Grail' />
+<item id='3170' name='Moonflair Spellblade' />
+<item id='3167' name='Bonetooth Necklace' />
+<item id='3159' name='Grezs Spectral Lantern' />
+<item id='3156' name='Maw of Malmortius' />
+<item id='3153' name='Blade of the Ruined King' />
+<item id='3146' name='Hextech Gunblade' />
+<item id='3143' name='Randuins Omen' />
+<item id='3140' name='Quicksilver Sash' />
+<item id='3135' name='Void Staff' />
+<item id='3128' name='Deathfire Grasp' />
+<item id='3122' name='Wicked Hatchet' />
+<item id='3115' name='Nashors Tooth' />
+<item id='3110' name='Frozen Heart' />
+<item id='3105' name='Aegis of the Legion' />
+<item id='3101' name='Stinger' />
+<item id='3097' name='Targons Brace' />
+<item id='3092' name='Frost Queens Claim' />
+<item id='3089' name='Rabadons Deathcap' />
+<item id='3085' name='Runaans Hurricane (Ranged Only)' />
+<item id='3082' name='Wardens Mail' />
+<item id='3075' name='Thornmail' />
+<item id='3072' name='The Bloodthirster' />
+<item id='3069' name='Talisman of Ascension' />
+<item id='3065' name='Spirit Visage' />
+<item id='3056' name='Ohmwrecker' />
+<item id='3047' name='Ninja Tabi' />
+<item id='3043' name='Muramana' />
+<item id='3040' name='Seraphs Embrace' />
+<item id='3029' name='Rod of Ages (Crystal Scar)' />
+<item id='3026' name='Guardian Angel' />
+<item id='3023' name='Twin Shadows' />
+<item id='3010' name='Catalyst the Protector' />
+<item id='3007' name='Archangels Staff (Crystal Scar)' />
+<item id='3004' name='Manamune' />
+<item id='2052' name='Poro-Snax' />
+<item id='2049' name='Sightstone' />
+<item id='2045' name='Ruby Sightstone' />
+<item id='2041' name='Crystalline Flask' />
+<item id='2037' name='Elixir of Fortitude' />
+<item id='2004' name='Mana Potion' />
+<item id='1076' name='Dorans Ring (Showdown)' />
+<item id='1063' name='Prospectors Ring' />
+<item id='1057' name='Negatron Cloak' />
+<item id='1054' name='Dorans Shield' />
+<item id='1051' name='Brawlers Gloves' />
+<item id='1039' name='Hunters Machete' />
+<item id='1036' name='Long Sword' />
+<item id='1029' name='Cloth Armor' />
+<item id='1026' name='Blasting Wand' />
+<item id='1006' name='Rejuvenation Bead' />
+</items>
