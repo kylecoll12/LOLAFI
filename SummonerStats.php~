@@ -21,8 +21,8 @@
 	.ranktable {
 		border-collapse: collapse;
 		border: solid 1px #000099;
-		background-color: #7ADAC6;
-		color: #000099;
+		background-color: #FFFFFF;
+		color: #000000;
 	}
 	
 	.ranktableheader {
@@ -49,102 +49,49 @@ box-shadow: 0 0 2px #000;
 <?php
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
-	
-    $results=array();
-
+	date_default_timezone_set('America/Chicago');
+	$summonerInfo=array();
+	$games=array();
 	$xml=simplexml_load_file("SummonerInfo.xml");
-	//var_dump($xml);
+	$summonerSpace=$_GET['summoner'];
+	$summoner=str_replace(' ', '', $summonerSpace);
         //look up summoner info
-		//$node=$xml->xpath("//summoners/summoner[name='".$summoners[$i]."']");  //search by name
-		//var_dump($node[0]);
-		$xSummoners=$xml->xpath("//summoners/summoner/name");
-		$arrLength=count($xSummoners);
-		for($i=0;$i<$arrLength;$i++)
-		{
-			//var_dump($summoners[$i]);
-			//look up summoner info
-			$node=$xml->xpath("//summoners/summoner[name='".$xSummoners[$i]."']");
-			//var_dump($node[0]);
-			$results[$i]['name']= $node[0]->name;
-			$results[$i]['id']= $node[0]->id;
-			$results[$i]['summonerLevel']= $node[0]->summonerLevel;
-			$results[$i]['profileIconId']= $node[0]->profileIconId;
-			$results[$i]['league']=$node[0]->league;
-			$results[$i]['rank']=$node[0]->rank;
-			$results[$i]['leaguePoints']=$node[0]->leaguePoints;
-			$gStats = getGameStats($node[0]->games);
-			$results[$i]['record']=$gStats[0];
-			$results[$i]['kda']=$gStats[1];
-			$results[$i]['gpm']=$gStats[2];
-			$results[$i]['ss']=$gStats[3];
-		}
+	$node=$xml->xpath('//summoner[name[.="'.$summonerSpace.'"]]');  //search by name
+	//var_dump($node[0]);
+	$summonerInfo['name']= $node[0]->name;
+	$summonerInfo['id']= $node[0]->id;
+	$summonerInfo['summonerLevel']= $node[0]->summonerLevel;
+	$summonerInfo['profileIconId']= $node[0]->profileIconId;
+	$summonerInfo['league']=$node[0]->league;
+	$summonerInfo['rank']=$node[0]->rank;
+	$summonerInfo['leaguePoints']=$node[0]->leaguePoints;
+	
+	$games=$node[0]->games->game;
+	//var_dump($games);
     
-	function getGameStats($games)
-	{
-		$wins=0;
-		$losses=0;
-		$kills=0;
-		$deaths=0;
-		$assists=0;
-		$gamesTot=0;
-		$time=0;
-		$gold=0;
-		$cs=0;
-		$fiveGames=0;
-		foreach($games->game as $thisGame)
-		{
-			$gamesTot++;
-				//each game contains the attribute WIN (23) if the game was won and LOSS (25) if the game was lost.  We are just counting the wins here.
-				$result = $thisGame->xpath('statistics/stat[@name="WIN"]');
-				if(count($result)>0)                    
-					$wins++;
-				else
-					$losses++;
-					
-				$attribute = $thisGame->xpath('statistics/stat[@name="CHAMPIONS_KILLED"]');
-				if(count($attribute)>0)
-					$kills = $kills + $attribute[0]["value"];
-				
-				$attribute = $thisGame->xpath('statistics/stat[@name="NUM_DEATHS"]');
-				if(count($attribute)>0)
-					$deaths = $deaths + $attribute[0]["value"];
-				
-				$attribute = $thisGame->xpath('statistics/stat[@name="ASSISTS"]');
-				if(count($attribute)>0)
-					$assists = $assists + $attribute[0]["value"];
-				
-				$gameType = $thisGame->subType;
-				//var_dump($attribute);
-				if($gameType=="RANKED_SOLO_5x5" || $gameType=="NORMAL")
-				{
-				$fiveGames++;
-				$attribute = $thisGame->xpath('statistics/stat[@name="TIME_PLAYED"]');
-				if(count($attribute)>0)
-					$time = $time + $attribute[0]["value"];
-				
-				$attribute = $thisGame->xpath('statistics/stat[@name="GOLD_EARNED"]');
-				if(count($attribute)>0)
-					$gold = $gold + $attribute[0]["value"];
-				
-				$attribute = $thisGame->xpath('statistics/stat[@name="MINIONS_KILLED"]');
-				if(count($attribute)>0)
-					$cs = $cs + $attribute[0]["value"];
-				}
-				
-		}
-		$killsPerGame=number_format($kills/$gamesTot,2);
-		$deathsPerGame=number_format($deaths/$gamesTot,2);
-		$assistsPerGame=number_format($assists/$gamesTot,2);
-		$gpm=number_format($gold/($time/60));
-		$record = $wins."-".$losses;
-		$kda = $killsPerGame."/".$deathsPerGame."/".$assistsPerGame;
-		$seeleyscore = number_format(((($kills + $assists - $deaths)*($cs*13/$time)+$gpm)/3.14)/$fiveGames,2);
-		$gameStats = array($record,$kda,$gpm,$seeleyscore);
-		return $gameStats;
-	}
+	
 	//var_dump(count($results));
     //sort
-    function getLeagueValue($a)
+	function formatStat($sName,$s)
+	{
+		if(substr($sName,0,4)=="item")
+			return lookupItem($s);
+		else
+			return $s;
+	}
+	function lookupItem($itemId)
+	{
+		$xmlItems=simplexml_load_file("ItemData.xml");
+		$node=$xmlItems->xpath('//item[@id="'.$itemId.'"]');
+		return $node[0]["name"];
+	}
+	function lookupChampion($champId)
+	{
+		$xmlChamps=simplexml_load_file("ChampionData.xml");
+		$node=$xmlChamps->xpath('//champion[@id="'.$champId.'"]');
+		return $node[0]["name"];
+	}
+	function getLeagueValue($a)
     {
     	if($a=="BRONZE")
     		return 5;
@@ -190,28 +137,24 @@ box-shadow: 0 0 2px #000;
     	//return strcmp($a["league"],$b["league"]);
     }
     
-    usort($results,"cmp");
+    //usort($results,"cmp");
     
 ?>
 <center>
 <table class='ranktable' border='1'>
 <tr class='ranktableheader'>
-	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td colspan='2'>League</td><td>Points</td><td>Record</td><td>K/D/A</td><td>GPM</td><!--<td>S Score</td><td></td>-->
+	<td>Stats</td>
 </tr>
-<?php foreach ($results as $row): ?>
+<?php foreach ($games as $game): ?>
 <tr>
-<td><div class='iconcell' style="background-image:url(http://lkimg.zamimg.com/shared/riot/images/profile_icons/profileIcon<?php echo $row['profileIconId']; ?>.jpg);"> </td>
-<td><?php echo $row['name']; ?></td>
-<!--<td>Id: <?php echo $row['id']; ?></td>-->
-<td><?php echo $row['summonerLevel']; ?></td>
-<td><?php echo $row['league']; ?></td>
-<td><?php echo $row['rank']; ?></td>
-<td><?php echo $row['leaguePoints']; ?></td>
-<td><?php echo $row['record']; ?></td>
-<td><?php echo $row['kda']; ?></td>
-<td><?php echo $row['gpm']; ?></td>
-<!--<td><?php echo $row['ss']; ?></td>-->
-<!--<td><button id="bUpdate">Check for updates</button></td>-->
+<td><table>
+<tr><td>Mode</td><td><?php echo $game->gameMode; ?></td></tr>
+<tr><td>Champion</td><td><?php echo lookupChampion($game->championId); ?></td></tr>
+<tr><td>Date</td><td><?php echo date('Y-m-d H:i:s', (int)substr($game->createDate,0,-3)); ?></td></tr>
+<?php foreach ($game->stats->children() as $statName => $stat): ?>
+<tr><td><?php echo $statName; ?></td><td><?php echo formatStat($statName,$stat); ?></td></tr>
+<?php endforeach; ?>
+</table></td>
 </tr>
 <?php endforeach; ?>
 </table>

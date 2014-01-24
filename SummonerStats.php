@@ -15,22 +15,30 @@
 <div class="container">
 <style>
 	body {
-		font-family: Courier;	
+		font-family: Helvetica;	
 	}
 	
 	.ranktable {
 		border-collapse: collapse;
-		border: solid 1px #000099;
 		background-color: #FFFFFF;
 		color: #000000;
+		height: 100%;
 	}
 	
 	.ranktableheader {
 		font-weight: bold;
+		color: white;
+		background-color: gray;
+	}
+	
+	.ranktable tr {
+		border: solid 1px #000000
 	}
 	
 	.ranktable td {
-		padding: 4px;	
+		padding: 7px;	
+		border-left: 0;
+		border-right: 0;
 	}
 	
 	.iconcell
@@ -46,6 +54,17 @@ box-shadow: 0 0 2px #000;
 -webkit-box-shadow: 0 0 2px #000;
 	}
 </style>
+
+<script type="text/javascript">
+		function showDiv(id) {
+			var jqueryname="#" + id;
+			if($(jqueryname).css("display")=="block")
+				$(jqueryname).css("display", "none");
+			else
+				$(jqueryname).css("display", "block");
+		};
+</script>
+
 <?php
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
@@ -137,25 +156,30 @@ box-shadow: 0 0 2px #000;
     	//return strcmp($a["league"],$b["league"]);
     }
     
+    
     //usort($results,"cmp");
     
+    //date('Y-m-d H:i:s', (int)substr($game->createDate,0,-3));  gets date and time
 ?>
 <center>
 <table class='ranktable' border='1'>
 <tr class='ranktableheader'>
-	<td>Stats</td>
+	<td colspan='4'>Stats</td>
 </tr>
+<tr class='ranktableheader'><td>Mode</td><td>Champion</td><td>K/D/A</td><td>Date</td></tr>
 <?php foreach ($games as $game): ?>
-<tr>
-<td><table>
-<tr><td>Mode</td><td><?php echo $game->gameMode; ?></td></tr>
-<tr><td>Champion</td><td><?php echo lookupChampion($game->championId); ?></td></tr>
-<tr><td>Date</td><td><?php echo date('Y-m-d H:i:s', (int)substr($game->createDate,0,-3)); ?></td></tr>
+<tr><td><?php echo $game->subType ?></td>
+<td><?php echo lookupChampion($game->championId); ?></td>
+<td><?php echo $game->stats->championsKilled."/".$game->stats->numDeaths."/".$game->stats->assists ?></td>
+<td><?php echo date('m/d/Y', (int)substr($game->createDate,0,-3)); ?></td>
+</tr>
+<tr><?php echo "<td colspan='4' style='background-color: gray; color: white; cursor: pointer; font-size: small;' onclick=\"showDiv('g".$game->gameId."')\">" ?>Show/Hide Stats
+<?php echo "<table style='display: none;' id='g".$game->gameId."'>" ?>
 <?php foreach ($game->stats->children() as $statName => $stat): ?>
 <tr><td><?php echo $statName; ?></td><td><?php echo formatStat($statName,$stat); ?></td></tr>
 <?php endforeach; ?>
-</table></td>
-</tr>
+<?php echo "</table>" ?>
+</td></tr>
 <?php endforeach; ?>
 </table>
 

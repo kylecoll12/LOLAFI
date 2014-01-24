@@ -15,22 +15,30 @@
 <div class="container">
 <style>
 	body {
-		font-family: Courier;	
+		font-family: Helvetica;	
 	}
 	
 	.ranktable {
 		border-collapse: collapse;
-		border: solid 1px #000099;
-		background-color: #7ADAC6;
-		color: #000099;
+		background-color: #FFFFFF;
+		color: #000000;
+		height: 100%;
 	}
 	
 	.ranktableheader {
 		font-weight: bold;
+		color: white;
+		background-color: gray;
+	}
+	
+	.ranktable tr {
+		border: solid 1px #000000
 	}
 	
 	.ranktable td {
-		padding: 4px;	
+		padding: 7px;	
+		border-left: 1;
+		border-right: 0;
 	}
 	
 	.iconcell
@@ -80,6 +88,9 @@ box-shadow: 0 0 2px #000;
 			$results[$i]['kda']=$gStats[1];
 			$results[$i]['gpm']=$gStats[2];
 			$results[$i]['ss']=$gStats[3];
+			$results[$i]['quadrakills']=$gStats[4];
+			$results[$i]['pentakills']=$gStats[5];
+			$results[$i]['mostPlayedChamp']=$gStats[6];
 		}
     
 	function getGameStats($games)
@@ -94,11 +105,17 @@ box-shadow: 0 0 2px #000;
 		$gold=0;
 		$cs=0;
 		$fiveGames=0;
+		$pentakills=0;
+		$quadrakills=0;
+		$champsPlayed = array();
 		foreach($games->game as $thisGame)
 		{
 				$gamesTot++;
 				$gameType = $thisGame->subType;
-				if($gameType=="RANKED_SOLO_5x5" || $gameType=="NORMAL")
+				$champsPlayed[]= (int)$thisGame->championId;
+				$quadrakills= $quadrakills + $thisGame->stats->quadraKills;
+				$pentakills=$pentakills + $thisGame->stats->pentaKills;
+				if($gameType=="RANKED_SOLO_5x5")// || $gameType=="NORMAL")
 				{
 					//each game contains the attribute WIN (23) if the game was won and LOSS (25) if the game was lost.  We are just counting the wins here.
 					//^^ not true anymore.  This was changed in version 3
@@ -138,11 +155,15 @@ box-shadow: 0 0 2px #000;
 				}
 				
 		}
-		if($gamesTot>0)
+		$champCount=array_count_values($champsPlayed);//Counts the values in the array, returns associatve array
+		arsort($champCount);//Sort it from highest to lowest
+		$keys=array_keys($champCount);//Split the array so we can find the most occuring key
+		$mostPlayedChamp = lookupChampion($keys[0]); //champCount keys are the ids values are the amount of times played 
+		if($fiveGames>0)
 		{
-			$killsPerGame=number_format($kills/$gamesTot,2);
-			$deathsPerGame=number_format($deaths/$gamesTot,2);
-			$assistsPerGame=number_format($assists/$gamesTot,2);
+			$killsPerGame=number_format($kills/$fiveGames,2);
+			$deathsPerGame=number_format($deaths/$fiveGames,2);
+			$assistsPerGame=number_format($assists/$fiveGames,2);
 			if($time>0)
 				$gpm=number_format($gold/($time/60));
 			else
@@ -150,14 +171,21 @@ box-shadow: 0 0 2px #000;
 			$record = $wins."-".$losses;
 			$kda = $killsPerGame."/".$deathsPerGame."/".$assistsPerGame;
 			$seeleyscore = 0;//number_format(((($kills + $assists - $deaths)*($cs*13/$time)+$gpm)/3.14)/$fiveGames,2);
-			$gameStats = array($record,$kda,$gpm,$seeleyscore);
+			$gameStats = array($record,$kda,$gpm,$seeleyscore,$quadrakills,$pentakills,$mostPlayedChamp);
 		}
 		else
-		{ $gameStats = array(0,0,0,0); }
+		{ $gameStats = array(0,0,0,0,$quadrakills,$pentakills,$mostPlayedChamp); }
 		return $gameStats;
 	}
 	//var_dump(count($results));
     //sort
+    
+    	function lookupChampion($champId)
+	{
+		$xmlChamps=simplexml_load_file("ChampionData.xml");
+		$node=$xmlChamps->xpath('//champion[@id="'.$champId.'"]');
+		return $node[0]["name"];
+	}
     function getLeagueValue($a)
     {
     	if($a=="BRONZE")
@@ -210,7 +238,7 @@ box-shadow: 0 0 2px #000;
 <center>
 <table class='ranktable' border='1'>
 <tr class='ranktableheader'>
-	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td colspan='2'>League</td><td>Points</td><td>Record</td><td>K/D/A</td><td>GPM</td><!--<td>S Score</td><td></td>-->
+	<td>Icon</td><td>Name</td><!--<td></td>--><td>Level</td><td>League</td><td>Points</td><td>Record</td><td>K/D/A</td><td>GPM</td><td>Quadra</td><td>Penta</td><td>Most Played</td><!--<td>S Score</td><td></td>-->
 </tr>
 <?php foreach ($results as $row): ?>
 <tr>
@@ -218,12 +246,14 @@ box-shadow: 0 0 2px #000;
 <td><?php echo '<a href="SummonerStats.php?summoner='.$row['name'].'">'.$row['name'].'</a>'; ?></td>
 <!--<td>Id: <?php echo $row['id']; ?></td>-->
 <td><?php echo $row['summonerLevel']; ?></td>
-<td><?php echo $row['league']; ?></td>
-<td><?php echo $row['rank']; ?></td>
+<td><?php echo $row['league'].' '.$row['rank'];; ?></td>      
 <td><?php echo $row['leaguePoints']; ?></td>
 <td><?php echo $row['record']; ?></td>
 <td><?php echo $row['kda']; ?></td>
 <td><?php echo $row['gpm']; ?></td>
+<td><?php echo $row['quadrakills']; ?></td>
+<td><?php echo $row['pentakills']; ?></td>
+<td><?php echo $row['mostPlayedChamp']; ?></td>
 <!--<td><?php echo $row['ss']; ?></td>-->
 <!--<td><button id="bUpdate">Check for updates</button></td>-->
 </tr>
