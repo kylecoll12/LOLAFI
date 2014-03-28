@@ -15,22 +15,30 @@
 <div class="container">
 <style>
 	body {
-		font-family: Courier;	
+		font-family: Helvetica;	
 	}
 	
 	.ranktable {
 		border-collapse: collapse;
-		border: solid 1px #000099;
 		background-color: #FFFFFF;
 		color: #000000;
+		height: 100%;
 	}
 	
 	.ranktableheader {
 		font-weight: bold;
+		color: white;
+		background-color: gray;
+	}
+	
+	.ranktable tr {
+		border: solid 1px #000000
 	}
 	
 	.ranktable td {
-		padding: 4px;	
+		padding: 7px;	
+		border-left: 0;
+		border-right: 0;
 	}
 	
 	.iconcell
@@ -46,12 +54,25 @@ box-shadow: 0 0 2px #000;
 -webkit-box-shadow: 0 0 2px #000;
 	}
 </style>
+
+<script type="text/javascript">
+		function showDiv(id) {
+			var jqueryname="#" + id;
+			//if you use "block" on a <tr> then you will only occupy one column so we use "table-row" instead
+			if($(jqueryname).css("display")=="table-row")
+				$(jqueryname).css("display", "none");
+			else
+				$(jqueryname).css("display", "table-row");
+		};
+</script>
+
 <?php
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 	date_default_timezone_set('America/Chicago');
 	$summonerInfo=array();
 	$games=array();
+	$gamesparent=array();
 	$xml=simplexml_load_file("SummonerInfo.xml");
 	$summonerSpace=$_GET['summoner'];
 	$summoner=str_replace(' ', '', $summonerSpace);
@@ -66,8 +87,7 @@ box-shadow: 0 0 2px #000;
 	$summonerInfo['rank']=$node[0]->rank;
 	$summonerInfo['leaguePoints']=$node[0]->leaguePoints;
 	
-	$games=$node[0]->games->game;
-	//var_dump($games);
+	$gamesparent=$node[0]->games->game;
     
 	
 	//var_dump(count($results));
@@ -91,6 +111,7 @@ box-shadow: 0 0 2px #000;
 		$node=$xmlChamps->xpath('//champion[@id="'.$champId.'"]');
 		return $node[0]["name"];
 	}
+	
 	function getLeagueValue($a)
     {
     	if($a=="BRONZE")
@@ -108,6 +129,15 @@ box-shadow: 0 0 2px #000;
     	else
     		return 6;
     }
+    
+    function getWLColor($a)
+    {
+    	    if($a=="1")
+    	    	    return "#99FF99";
+    	    else
+    	    	    return "#FF9999";
+    }
+    
     function getRank($a)
     {
     	if($a=="V")
@@ -136,26 +166,43 @@ box-shadow: 0 0 2px #000;
     		return (getLeagueValue($a["league"]) < getLeagueValue($b["league"])) ? -1 : 1;
     	//return strcmp($a["league"],$b["league"]);
     }
-    
+    function timecmp($a,$b)
+    { 
+    	    //echo "<br><br>".$a->createDate;
+    	    //echo "<br>".$b->createDate;
+    	    //echo "<br><br>";
+    	    return strcmp($b->createDate,$a->createDate);
+    	    //return ((int)$b->createDate) - ((int)$a->createDate);
+    }
+	
+	foreach($gamesparent as $game) {$games[] = $game;}
+	
+    uasort($games,"timecmp");
     //usort($results,"cmp");
-    
+    //var_dump($node[0]->games);
+    //var_dump($games[2]);
+    //date('Y-m-d H:i:s', (int)substr($game->createDate,0,-3));  gets date and time
 ?>
 <center>
 <table class='ranktable' border='1'>
 <tr class='ranktableheader'>
-	<td>Stats</td>
+	<td colspan='5'>Stats</td>
 </tr>
+<tr class='ranktableheader'><td>Mode</td><td>Champion</td><td>K/D/A</td><td>Date</td><td></td></tr>
 <?php foreach ($games as $game): ?>
-<tr>
-<td><table>
-<tr><td>Mode</td><td><?php echo $game->gameMode; ?></td></tr>
-<tr><td>Champion</td><td><?php echo lookupChampion($game->championId); ?></td></tr>
-<tr><td>Date</td><td><?php echo date('Y-m-d H:i:s', (int)substr($game->createDate,0,-3)); ?></td></tr>
+<?php echo "<tr style='background-color: ".getWLColor($game->stats->win).";'>" ?>
+<td><?php echo $game->subType ?></td>
+<td><?php echo lookupChampion($game->championId); ?></td>
+<td><?php echo $game->stats->championsKilled."/".$game->stats->numDeaths."/".$game->stats->assists ?></td>
+<td><?php echo date('m/d/Y', (int)substr($game->createDate,0,-3)); ?></td>
+<?php echo "<td style='background-color: gray; color: white; cursor: pointer; font-size: small;' onclick=\"showDiv('g".$game->gameId."')\">+</td>" ?>
+</tr>
+<?php echo "<tr style='display: none;' id='g".$game->gameId."'>" ?><td colspan='5'><table width='100%'>
 <?php foreach ($game->stats->children() as $statName => $stat): ?>
 <tr><td><?php echo $statName; ?></td><td><?php echo formatStat($statName,$stat); ?></td></tr>
 <?php endforeach; ?>
-</table></td>
-</tr>
+<?php echo "</table>" ?>
+</td></tr>
 <?php endforeach; ?>
 </table>
 

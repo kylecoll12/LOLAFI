@@ -1,36 +1,39 @@
 <?php
 
-  $key="aa31ef83-5c5d-433a-ad05-1dea9c3736e5";  //api key goes here
+  $key="";  //api key goes here
     // This file updates summoner info from the RIOT server and adds it to the SummonerInfo.xml file.
     // Send the summoner name as the query string and it will update that summoner.
 
     $summonerSpace=$_GET['summoner'];
     $summoner=str_replace(' ', '', $summonerSpace);
-	$url = "http://prod.api.pvp.net/api/lol/na/v1.1/summoner/by-name/" . $summoner . "?api_key=" . $key;
+	$url = "http://prod.api.pvp.net/api/lol/na/v1.3/summoner/by-name/" . $summoner . "?api_key=" . $key;
 	$JSON = file_get_contents($url);
 
 	// echo the JSON (you can echo this to JavaScript to use it there)
 	//echo $JSON;
 
 	// You can decode it to process it in PHP
-	$data = json_decode($JSON, true);
-  $summonerId=$data["id"];
+	$datanonarray = json_decode($JSON, true);
+	$data=array_values($datanonarray);
+	//since you can now send a comma-separated list of summoner names the data that comes back is in array form.
+	//We are only sending one summoner name so the result will be the first element of the returned array or element [0]
+  $summonerId=$data[0]["id"];
 	//var_dump($data);
-
 	$xml=simplexml_load_file("SummonerInfo.xml");
     //REMOVE SPACES BEFORE THIS WILL WORK
     $node=$xml->xpath('//summoner[name[.="'.$summonerSpace.'"]]');
-	$node[0]->id = $data["id"];
-	$node[0]->name = $data["name"];
-	$node[0]->profileIconId = $data["profileIconId"];
-	$node[0]->summonerLevel = $data["summonerLevel"];
+    
+	//$node[0]->id = $data["id"];
+	//$node[0]->name = $data["name"];
+	$node[0]->profileIconId = $data[0]["profileIconId"];
+	$node[0]->summonerLevel = $data[0]["summonerLevel"];
 	//now timestamp this entry
 	date_default_timezone_set('America/Chicago');
 	$timestamp = date('Y-m-d H:i:s');
 	$node[0]->lastUpdate = $timestamp;
 	
   
-  $urlLeague = "http://prod.api.pvp.net/api/lol/na/v2.2/league/by-summoner/" . $summonerId . "?api_key=" . $key;
+  $urlLeague = "http://prod.api.pvp.net/api/lol/na/v2.3/league/by-summoner/" . $summonerId . "?api_key=" . $key;
 	$JSONLeague = file_get_contents($urlLeague);
   $ulData=json_decode($JSONLeague,true);
   if($ulData!=null)

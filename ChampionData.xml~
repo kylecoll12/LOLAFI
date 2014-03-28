@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <champions>
+<champion name='Aatrox' id='266' />
+<champion name='Ahri' id='103' />
+<champion name='Akali' id='84' />
 <champion name='Alistar' id='12' />
 <champion name='Amumu' id='32' />
 <champion name='Anivia' id='34' />
