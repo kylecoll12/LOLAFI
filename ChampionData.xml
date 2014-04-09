@@ -1,121 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
 <champions>
-<champion name='Aatrox' id='266' />
-<champion name='Ahri' id='103' />
-<champion name='Akali' id='84' />
-<champion name='Alistar' id='12' />
-<champion name='Amumu' id='32' />
-<champion name='Anivia' id='34' />
-<champion name='Annie' id='1' />
-<champion name='Ashe' id='22' />
-<champion name='Blitzcrank' id='53' />
-<champion name='Brand' id='63' />
-<champion name='Caitlyn' id='51' />
-<champion name='Cassiopeia' id='69' />
-<champion name='ChoGath' id='31' />
-<champion name='Corki' id='42' />
-<champion name='Darius' id='122' />
-<champion name='Diana' id='131' />
-<champion name='Dr. Mundo' id='36' />
-<champion name='Draven' id='119' />
-<champion name='Elise' id='60' />
-<champion name='Evelynn' id='28' />
-<champion name='Ezreal' id='81' />
-<champion name='Fiddlesticks' id='9' />
-<champion name='Fiora' id='114' />
-<champion name='Fizz' id='105' />
-<champion name='Galio' id='3' />
-<champion name='Gangplank' id='41' />
-<champion name='Garen' id='86' />
-<champion name='Gragas' id='79' />
-<champion name='Graves' id='104' />
-<champion name='Hecarim' id='120' />
-<champion name='Heimerdinger' id='74' />
-<champion name='Irelia' id='39' />
-<champion name='Janna' id='40' />
-<champion name='Jarvan IV' id='59' />
-<champion name='Jax' id='24' />
-<champion name='Jayce' id='126' />
-<champion name='Jinx' id='222' />
-<champion name='Karma' id='43' />
-<champion name='Karthus' id='30' />
-<champion name='Kassadin' id='38' />
-<champion name='Katarina' id='55' />
-<champion name='Kayle' id='10' />
-<champion name='Kennen' id='85' />
-<champion name='Khazix' id='121' />
-<champion name='KogMaw' id='96' />
-<champion name='LeBlanc' id='7' />
-<champion name='Lee Sin' id='64' />
-<champion name='Leona' id='89' />
-<champion name='Lissandra' id='127' />
-<champion name='Lucian' id='236' />
-<champion name='Lulu' id='117' />
-<champion name='Lux' id='99' />
-<champion name='Malphite' id='54' />
-<champion name='Malzahar' id='90' />
-<champion name='Maokai' id='57' />
-<champion name='Master Yi' id='11' />
-<champion name='Miss Fortune' id='21' />
-<champion name='Mordekaiser' id='82' />
-<champion name='Morgana' id='25' />
-<champion name='Nami' id='267' />
-<champion name='Nasus' id='75' />
-<champion name='Nautilus' id='111' />
-<champion name='Nidalee' id='76' />
-<champion name='Nocturne' id='56' />
-<champion name='Nunu' id='20' />
-<champion name='Olaf' id='2' />
-<champion name='Orianna' id='61' />
-<champion name='Pantheon' id='80' />
-<champion name='Poppy' id='78' />
-<champion name='Quinn' id='133' />
-<champion name='Rammus' id='33' />
-<champion name='Renekton' id='58' />
-<champion name='Rengar' id='107' />
-<champion name='Riven' id='92' />
-<champion name='Rumble' id='68' />
-<champion name='Ryze' id='13' />
-<champion name='Sejuani' id='113' />
-<champion name='Shaco' id='35' />
-<champion name='Shen' id='98' />
-<champion name='Shyvana' id='102' />
-<champion name='Singed' id='27' />
-<champion name='Sion' id='14' />
-<champion name='Sivir' id='15' />
-<champion name='Skarner' id='72' />
-<champion name='Sona' id='37' />
-<champion name='Soraka' id='16' />
-<champion name='Swain' id='50' />
-<champion name='Syndra' id='134' />
-<champion name='Talon' id='91' />
-<champion name='Taric' id='44' />
-<champion name='Teemo' id='17' />
-<champion name='Thresh' id='412' />
-<champion name='Tristana' id='18' />
-<champion name='Trundle' id='48' />
-<champion name='Tryndamere' id='23' />
-<champion name='Twisted Fate' id='4' />
-<champion name='Twitch' id='29' />
-<champion name='Udyr' id='77' />
-<champion name='Urgot' id='6' />
-<champion name='Varus' id='110' />
-<champion name='Vayne' id='67' />
-<champion name='Veigar' id='45' />
-<champion name='Velkoz' id='161' />
-<champion name='Vi' id='254' />
-<champion name='Viktor' id='112' />
-<champion name='Vladimir' id='8' />
-<champion name='Volibear' id='106' />
-<champion name='Warwick' id='19' />
-<champion name='Wukong' id='62' />
-<champion name='Xerath' id='101' />
-<champion name='Xin Zhao' id='5' />
-<champion name='Yasuo' id='157' />
-<champion name='Yorick' id='83' />
-<champion name='Zac' id='154' />
-<champion name='Zed' id='238' />
-<champion name='Ziggs' id='115' />
-<champion name='Zilean' id='26' />
-<champion name='Zyra' id='143' />
+<champion name='Aatrox' id='266' role='top' />
+<champion name='Ahri' id='103' role='mid' />
+<champion name='Akali' id='84' role='mid' />
+<champion name='Alistar' id='12' role='support' />
+<champion name='Amumu' id='32' role='jungle' />
+<champion name='Anivia' id='34' role='mid' />
+<champion name='Annie' id='1' role='support' />
+<champion name='Ashe' id='22' role='adc' />
+<champion name='Blitzcrank' id='53' role='support' />
+<champion name='Brand' id='63' role='mid' />
+<champion name='Caitlyn' id='51' role='adc' />
+<champion name='Cassiopeia' id='69' role='mid' />
+<champion name='ChoGath' id='31' role='top' />
+<champion name='Corki' id='42' role='adc' />
+<champion name='Darius' id='122' role='top' />
+<champion name='Diana' id='131' role='mid' />
+<champion name='Dr. Mundo' id='36' role='top' />
+<champion name='Draven' id='119' role='adc' />
+<champion name='Elise' id='60' role='jungle' />
+<champion name='Evelynn' id='28' role='jungle' />
+<champion name='Ezreal' id='81' role='adc' />
+<champion name='Fiddlesticks' id='9' role='jungle' />
+<champion name='Fiora' id='114' role='top' />
+<champion name='Fizz' id='105' role='mid' />
+<champion name='Galio' id='3' role='mid' />
+<champion name='Gangplank' id='41' role='top' />
+<champion name='Garen' id='86' role='top' />
+<champion name='Gragas' id='79' role='mid' />
+<champion name='Graves' id='104' role='adc' />
+<champion name='Hecarim' id='120' role='jungle' />
+<champion name='Heimerdinger' id='74' role='mid' />
+<champion name='Irelia' id='39' role='top' />
+<champion name='Janna' id='40' role='support' />
+<champion name='Jarvan IV' id='59' role='jungle' />
+<champion name='Jax' id='24' role='top' />
+<champion name='Jayce' id='126' role='top' />
+<champion name='Jinx' id='222' role='adc' />
+<champion name='Karma' id='43' role='support' />
+<champion name='Karthus' id='30' role='mid' />
+<champion name='Kassadin' id='38' role='mid' />
+<champion name='Katarina' id='55' role='mid' />
+<champion name='Kayle' id='10' role='mid' />
+<champion name='Kennen' id='85' role='mid' />
+<champion name='Khazix' id='121' role='jungle' />
+<champion name='KogMaw' id='96' role='adc' />
+<champion name='LeBlanc' id='7' role='mid' />
+<champion name='Lee Sin' id='64' role='jungle' />
+<champion name='Leona' id='89' role='support' />
+<champion name='Lissandra' id='127' role='mid' />
+<champion name='Lucian' id='236' role='adc' />
+<champion name='Lulu' id='117' role='support' />
+<champion name='Lux' id='99' role='mid' />
+<champion name='Malphite' id='54' role='top' />
+<champion name='Malzahar' id='90' role='mid' />
+<champion name='Maokai' id='57' role='jungle' />
+<champion name='Master Yi' id='11' role='jungle' />
+<champion name='Miss Fortune' id='21' role='adc' />
+<champion name='Mordekaiser' id='82' role='mid' />
+<champion name='Morgana' id='25' role='support' />
+<champion name='Nami' id='267' role='support' />
+<champion name='Nasus' id='75' role='top' />
+<champion name='Nautilus' id='111' role='jungle' />
+<champion name='Nidalee' id='76' role='mid' />
+<champion name='Nocturne' id='56' role='jungle' />
+<champion name='Nunu' id='20' role='support' />
+<champion name='Olaf' id='2' role='jungle' />
+<champion name='Orianna' id='61' role='mid' />
+<champion name='Pantheon' id='80' role='jungle' />
+<champion name='Poppy' id='78' role='top' />
+<champion name='Quinn' id='133' role='adc' />
+<champion name='Rammus' id='33' role='jungle' />
+<champion name='Renekton' id='58' role='top' />
+<champion name='Rengar' id='107' role='top' />
+<champion name='Riven' id='92' role='top' />
+<champion name='Rumble' id='68' role='top' />
+<champion name='Ryze' id='13' role='top' />
+<champion name='Sejuani' id='113' role='jungle' />
+<champion name='Shaco' id='35' role='jungle' />
+<champion name='Shen' id='98' role='top' />
+<champion name='Shyvana' id='102' role='top' />
+<champion name='Singed' id='27' role='top' />
+<champion name='Sion' id='14' role='mid' />
+<champion name='Sivir' id='15' role='adc' />
+<champion name='Skarner' id='72' role='jungle' />
+<champion name='Sona' id='37' role='support' />
+<champion name='Soraka' id='16' role='support' />
+<champion name='Swain' id='50' role='mid' />
+<champion name='Syndra' id='134' role='mid' />
+<champion name='Talon' id='91' role='mid' />
+<champion name='Taric' id='44' role='support' />
+<champion name='Teemo' id='17' role='top' />
+<champion name='Thresh' id='412' role='support' />
+<champion name='Tristana' id='18' role='adc' />
+<champion name='Trundle' id='48' role='top' />
+<champion name='Tryndamere' id='23' role='top' />
+<champion name='Twisted Fate' id='4' role='mid' />
+<champion name='Twitch' id='29' role='adc' />
+<champion name='Udyr' id='77' role='jungle' />
+<champion name='Urgot' id='6' role='adc' />
+<champion name='Varus' id='110' role='adc' />
+<champion name='Vayne' id='67' role='adc' />
+<champion name='Veigar' id='45' role='mid' />
+<champion name='Velkoz' id='161' role='mid' />
+<champion name='Vi' id='254' role='jungle' />
+<champion name='Viktor' id='112' role='mid' />
+<champion name='Vladimir' id='8' role='top' />
+<champion name='Volibear' id='106' role='jungle' />
+<champion name='Warwick' id='19' role='top' />
+<champion name='Wukong' id='62' role='jungle' />
+<champion name='Xerath' id='101' role='mid' />
+<champion name='Xin Zhao' id='5' role='jungle' />
+<champion name='Yasuo' id='157' role='mid' />
+<champion name='Yorick' id='83' role='top' />
+<champion name='Zac' id='154' role='jungle' />
+<champion name='Zed' id='238' role='mid' />
+<champion name='Ziggs' id='115' role='mid' />
+<champion name='Zilean' id='26' role='support' />
+<champion name='Zyra' id='143' role='support' />
 </champions>

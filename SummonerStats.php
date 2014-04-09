@@ -99,6 +99,11 @@ box-shadow: 0 0 2px #000;
 	foreach($gstats[0] as $gs) {$gstatsArray[] = $gs;}
 	uasort($gstatsArray,"champcmp");
 	
+	$rstats=getRoleStats($gstats[0]);
+	$rstatsArray = array();
+	//foreach($rstats[0] as $rs) {$rstatsArray[] = $rs;}  //not necessary for this one
+	uasort($rstats,"champcmp");
+	
 	//formats item stats
 	function formatStat($sName,$s)
 	{
@@ -115,12 +120,21 @@ box-shadow: 0 0 2px #000;
 		return $node[0]["name"];
 	}
 	//Looks up champion based on champ id
-	function lookupChampion($champId)
+	function lookupChampionName($champId)
 	{
 		$xmlChamps=simplexml_load_file("ChampionData.xml");
 		$node=$xmlChamps->xpath('//champion[@id="'.$champId.'"]');
 		return $node[0]["name"];
 	}
+	
+	//Looks up champion role based on champ id
+	function lookupChampionRole($champId)
+	{
+		$xmlChamps=simplexml_load_file("ChampionData.xml");
+		$node=$xmlChamps->xpath('//champion[@id="'.$champId.'"]');
+		return $node[0]["role"];
+	}
+	
 	//Gets Red for a loss and green for a win
         function getWLColor($a)
         {
@@ -163,6 +177,8 @@ box-shadow: 0 0 2px #000;
 				if(($gameType=="RANKED_SOLO_5x5") || ($gameType=="NORMAL") || ($gameType=="CAP_5x5"))
 				{
 					$gamesTot++;
+					
+					//Combine all champion info
 					$dataSaved=false;
 					$gameChamp = (int)$thisGame->championId;
 					$gameKills = $thisGame->stats->championsKilled;
@@ -183,11 +199,11 @@ box-shadow: 0 0 2px #000;
 							$dataSaved=true;
 						}
 					}
+					//if it doesn't match any champs that we already have then add the new champion to the array
 					if(!$dataSaved)
 					{
 						$champsPlayed[] = array($gameChamp,$gameKills,$gameDeaths,$gameAssists,$gameWin,1);
 					}
-					
 				}
 				
 		}
@@ -197,6 +213,34 @@ box-shadow: 0 0 2px #000;
 		return $gameStats;
 	}
 	
+	function getRoleStats($champsPlayed)
+	{
+		//for each champion add them to their combined role list
+		$rolesPlayed = array();
+		$rolesPlayed[] = array('top',0,0,0,0,0);
+		$rolesPlayed[] = array('mid',0,0,0,0,0);
+		$rolesPlayed[] = array('jungle',0,0,0,0,0);
+		$rolesPlayed[] = array('adc',0,0,0,0,0);
+		$rolesPlayed[] = array('support',0,0,0,0,0);
+		for($j=0;$j<count($champsPlayed);$j++)
+		{
+			for($k=0;$k<count($rolesPlayed);$k++)
+			{
+				//echo "kills ".$champsPlayed[$j][1]." - deaths ".$champsPlayed[$j][2]." assists ".$champsPlayed[$j][3]." wins ".$champsPlayed[$j][4]." games ".$champsPlayed[$j][5];
+				if($rolesPlayed[$k][0]==lookupChampionRole($champsPlayed[$j][0]))
+				{
+					$rolesPlayed[$k][1] += $champsPlayed[$j][1];	//kills
+					$rolesPlayed[$k][2] += $champsPlayed[$j][2];	//deaths
+					$rolesPlayed[$k][3] += $champsPlayed[$j][3];	//assists	
+					$rolesPlayed[$k][4] += $champsPlayed[$j][4];	//wins
+					$rolesPlayed[$k][5] += $champsPlayed[$j][5];	//total games
+				}
+			}
+		}
+		
+		return $rolesPlayed;
+	}
+	
     //date('Y-m-d H:i:s', (int)substr($game->createDate,0,-3));  gets date and time
 ?>
 <center>
@@ -204,14 +248,27 @@ box-shadow: 0 0 2px #000;
 <tr><td style="vertical-align:top;">
 
 <table class='ranktable' border='1'>
-<tr class='ranktableheader'><td>Champ</td><td>Record</td><td>K/D/A</td></tr>
-<?php foreach ($gstatsArray as $gsa): ?>
-<tr><td><?php echo lookupChampion($gsa[0]) ?></td><td><?php echo (int)$gsa[4]."-".((int)$gsa[5]-(int)$gsa[4]); ?></td><td><?php echo number_format((int)$gsa[1]/(int)$gsa[5],2)."/".number_format((int)$gsa[2]/(int)$gsa[5],2)."/".number_format((int)$gsa[3]/(int)$gsa[5],2) ?></td></tr>
+<tr class='ranktableheader'><td>Role</td><td>Record</td><td>K/D/A</td></tr>
+<?php foreach ($rstats as $rsa): ?>
+<tr><td><?php echo $rsa[0] ?></td>
+<td><?php echo (int)$rsa[4]."-".((int)$rsa[5]-(int)$rsa[4]); ?></td>
+<td><?php echo number_format((int)$rsa[1]/(($rsa[5]==0)?1:(int)$rsa[5]),2)."/".number_format((int)$rsa[2]/(($rsa[5]==0)?1:(int)$rsa[5]),2)."/".number_format((int)$rsa[3]/(($rsa[5]==0)?1:(int)$rsa[5]),2) ?></td></tr> <!--(($rsa[5]==0)?1:(int)$rsa[5]) prevents division by zero -->
 <?php endforeach; ?>
 </table>
 
+
 </td>
-<td>
+<td style='vertical-align: top'>
+
+<table class='ranktable' border='1'>
+<tr class='ranktableheader'><td>Champ</td><td>Record</td><td>K/D/A</td></tr>
+<?php foreach ($gstatsArray as $gsa): ?>
+<tr><td><?php echo lookupChampionName($gsa[0]) ?></td><td><?php echo (int)$gsa[4]."-".((int)$gsa[5]-(int)$gsa[4]); ?></td><td><?php echo number_format((int)$gsa[1]/(int)$gsa[5],2)."/".number_format((int)$gsa[2]/(int)$gsa[5],2)."/".number_format((int)$gsa[3]/(int)$gsa[5],2) ?></td></tr>
+<?php endforeach; ?>
+</table>
+
+
+</td><td style='vertical-align: top'>
 
 <table class='ranktable' border='1'>
 <tr class='ranktableheader'>
@@ -221,7 +278,7 @@ box-shadow: 0 0 2px #000;
 <?php foreach ($games as $game): ?>
 <?php echo "<tr style='background-color: ".getWLColor($game->stats->win).";'>" ?>
 <td><?php echo $game->subType ?></td>
-<td><?php echo lookupChampion($game->championId); ?></td>
+<td><?php echo lookupChampionName($game->championId); ?></td>
 <td><?php echo (int)$game->stats->championsKilled."/".(int)$game->stats->numDeaths."/".(int)$game->stats->assists ?></td>
 <td><?php echo date('m/d/Y', (int)substr($game->createDate,0,-3)); ?></td>
 <?php echo "<td style='background-color: gray; color: white; cursor: pointer; font-size: small;' onclick=\"showDiv('g".$game->gameId."')\">+</td>" ?>
@@ -235,7 +292,7 @@ box-shadow: 0 0 2px #000;
 <?php endforeach; ?>
 </table>
 
-</td></tr></table
+</td></tr></table>
 
    </center>
 </div>
